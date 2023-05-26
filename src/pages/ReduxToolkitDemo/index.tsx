@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 import styles from './index.less'
 
-const RdeuxToolkitDemo = () => {
+const ReduxToolkitDemo = () => {
   const dispatch = useAppDispatch()
 
   const count = useAppSelector((state) => state.counter.value)
@@ -43,4 +43,4 @@ const RdeuxToolkitDemo = () => {
     </div>
   )
 }
-export default RdeuxToolkitDemo
+export default ReduxToolkitDemo

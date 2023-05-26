@@ -54,6 +54,13 @@ module.exports = {
               },
             },
           },
+          {
+            loader: 'style-resources-loader',
+            options: {
+              patterns: path.resolve(__dirname, './../src/global.less'),
+              injector: 'append',
+            },
+          },
         ],
       },
       {
@@ -82,8 +89,21 @@ module.exports = {
               },
             },
           },
+          {
+            loader: 'style-resources-loader',
+            options: {
+              patterns: path.resolve(__dirname, './../src/global.less'),
+              injector: 'append',
+            },
+          },
         ],
       },
+      // {
+      //   loader: 'style-resources-loader',
+      //   options: {
+      //     patterns: path.resolve(__dirname, './../src/global.less'),
+      //   },
+      // },
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
