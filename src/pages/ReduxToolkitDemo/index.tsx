@@ -2,33 +2,24 @@ import React from 'react'
 
 import { Button } from 'antd'
 
-import { decrement, increment } from '@/store/counterSlice'
-import { getUserInfo, fetchAddUser } from '@/store/strSlice'
+import { getUserInfo, fetchAddUser } from '@/store/usersSlice'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-
-import styles from './index.less'
 
 const ReduxToolkitDemo = () => {
   const dispatch = useAppDispatch()
 
-  const count = useAppSelector((state) => state.counter.value)
-  const users = useAppSelector((state) => state.strState.users)
+  const users = useAppSelector((state) => state.usersState.users)
 
   const getUserList = () => {
     dispatch(getUserInfo())
   }
 
   const addUser = () => {
-    dispatch(fetchAddUser({ name: 'Green', password: 123, role: '1' }))
+    dispatch(fetchAddUser({ name: `${Math.random()}`.substring(0, 6), password: 123, role: '1' }))
   }
 
   return (
     <div style={{ padding: 10 }}>
-      <Button onClick={() => dispatch(increment())}>Increment</Button>
-      <span className={styles.textNum}>{count}</span>
-      <Button onClick={() => dispatch(decrement())}>Decrement</Button>
-      <hr />
-
       <div>
         <Button onClick={getUserList} type="primary">
           查询

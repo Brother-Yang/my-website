@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import counterReducer from './counterSlice'
-import strReducer from './strSlice'
+import usersReducer from './usersSlice'
 
 // 自定义中间件
 // const myLog = (store) => (next) => (action) => {
@@ -12,8 +11,7 @@ import strReducer from './strSlice'
 // 官网的例子
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
-    strState: strReducer,
+    usersState: usersReducer,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myLog),
 })
