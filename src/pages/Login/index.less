@@ -1,16 +1,36 @@
-.FlexCentenr() {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.Wraps {
+.Container {
   height: 100%;
-  .FlexCentenr();
-  .LoginBox {
-    width: 400px;
-    height: 400px;
-    border: 1px solid skyblue;
-    .FlexCentenr();
+  background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+  .LoginWrapper {
+    background-color: #fff;
+    width: 358px;
+    height: 588px;
+    border-radius: 15px;
+    padding: 0 50px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    .Header {
+      font-size: 38px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 200px;
+    }
+    .FormWrapper {
+      .InputItem {
+        margin-bottom: 20px;
+        border: 0;
+        border-bottom: 1px solid rgb(128, 125, 125);
+        outline: none;
+      }
+      .Btn {
+        text-align: center;
+        width: 100%;
+        background-image: linear-gradient(to right, #a6c1ee, #fbc2eb);
+        color: #fff;
+        margin-bottom: 20px;
+      }
+    }
   }
 }
