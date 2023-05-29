@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Button } from 'antd'
 
-import { getUserInfo, fetchAddUser } from '@/store/usersSlice'
+import { fetchUsersList, fetchUserAdd } from '@/services/users'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 const ReduxToolkitDemo = () => {
@@ -10,22 +10,22 @@ const ReduxToolkitDemo = () => {
 
   const users = useAppSelector((state) => state.usersState.users)
 
-  const getUserList = () => {
-    dispatch(getUserInfo())
+  const onGetUserList = () => {
+    dispatch(fetchUsersList())
   }
 
-  const addUser = () => {
-    dispatch(fetchAddUser({ name: `${Math.random()}`.substring(0, 6), password: 123, role: '1' }))
+  const onAddUser = () => {
+    dispatch(fetchUserAdd({ name: `${Math.random()}`.substring(0, 6), password: 123, role: '1' }))
   }
 
   return (
     <div style={{ padding: 10 }}>
       <div>
-        <Button onClick={getUserList} type="primary">
+        <Button onClick={onGetUserList} type="primary">
           查询
         </Button>
 
-        <Button onClick={addUser} type="primary">
+        <Button onClick={onAddUser} type="primary">
           新增
         </Button>
 

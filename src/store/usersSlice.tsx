@@ -1,19 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
-import { request } from '@/util/request'
-
-// 异步
-export const getUserInfo = createAsyncThunk('users/getUserInfo', async ({}, thunkAPI) => {
-  console.log(thunkAPI, 'thunkAPI')
-  const res = request({ url: 'users' })
-  return res
-})
-
-export const fetchAddUser = createAsyncThunk('users/fetchAddUser', async (data: any) => {
-  const res = request({ url: 'users', method: 'POST', data })
-
-  return res
-})
+import { fetchUsersList } from '@/services/users'
 
 const initialState: {
   users: { id: number; name: string; password: string }[]
@@ -26,7 +13,7 @@ const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [getUserInfo.fulfilled as any]: (state, action) => {
+    [fetchUsersList.fulfilled as any]: (state, action) => {
       state.users = action.payload
     },
   },
