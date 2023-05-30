@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Button } from 'antd'
 
-import { fetchUsersList, fetchUserAdd } from '@/services/users'
+import { fetchUsersList, fetchLogin, fetchTokenTest, fetchAddUser } from '@/services/users'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
 const ReduxToolkitDemo = () => {
@@ -14,8 +14,16 @@ const ReduxToolkitDemo = () => {
     dispatch(fetchUsersList())
   }
 
+  const onTokenTest = () => {
+    dispatch(fetchTokenTest())
+  }
+
+  const onLogin = () => {
+    dispatch(fetchLogin({ username: 'Mike', password: '123' }))
+  }
+
   const onAddUser = () => {
-    dispatch(fetchUserAdd({ name: `${Math.random()}`.substring(0, 6), password: 123, role: '1' }))
+    dispatch(fetchAddUser({ username: 'Mike', password: '123', role: 1 }))
   }
 
   return (
@@ -27,6 +35,14 @@ const ReduxToolkitDemo = () => {
 
         <Button onClick={onAddUser} type="primary">
           新增
+        </Button>
+
+        <Button onClick={onLogin} type="primary">
+          登陆
+        </Button>
+
+        <Button onClick={onTokenTest} type="primary">
+          测试
         </Button>
 
         <h1>{users.map((item) => item.name)}</h1>

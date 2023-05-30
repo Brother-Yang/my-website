@@ -18,8 +18,10 @@ function errorStatus() {
 // 添加请求拦截器
 baseRequest.interceptors.request.use(
   function (config) {
-    // 在发送请求之前做些什么
-    // console.log(config, 'config')
+    const token = localStorage.getItem('token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   function (error) {
@@ -55,7 +57,7 @@ baseRequest.interceptors.response.use(
  * @param {options} options
  * @returns
  */
-const request = (options = {}) => {
+const request = (options = {}): Promise<{ [index: string]: any }> => {
   return new Promise((resolve, reject) => {
     baseRequest(options)
       .then((res) => {
