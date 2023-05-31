@@ -1,11 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { fetchUsersList } from '@/services/users'
+import { fetchUserInfo } from '@/services/users'
 
-const initialState: {
-  users: { id: number; name: string; password: string }[]
-} = {
-  users: [],
+interface Users {
+  users: {
+    name: string
+    email: string
+  }
+}
+
+const initialState: Users = {
+  users: {
+    name: '',
+    email: '',
+  },
 }
 
 const usersSlice = createSlice({
@@ -13,7 +21,7 @@ const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [fetchUsersList.fulfilled as any]: (state, action) => {
+    [fetchUserInfo.type]: (state, action) => {
       state.users = action.payload
     },
   },
