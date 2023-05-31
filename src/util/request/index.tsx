@@ -58,8 +58,8 @@ baseRequest.interceptors.response.use(
  * @param {options} options
  * @returns
  */
-const request = (options = {}): Promise<{ [index: string]: any }> => {
-  return new Promise((resolve, reject) => {
+const request = <T,>(options = {}): Promise<T> => {
+  return new Promise<T>((resolve, reject) => {
     baseRequest(options)
       .then((res) => {
         if (res.status >= 200 && res.status <= 304) {

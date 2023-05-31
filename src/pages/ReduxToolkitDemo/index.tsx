@@ -2,24 +2,11 @@ import React from 'react'
 
 import { Button } from 'antd'
 
-import {
-  fetchLogin,
-  fetchTokenTest,
-  fetchAddUser,
-  fetchUserInfo,
-  fetchUserList,
-} from '@/services/users'
+import { fetchLogin, fetchTokenTest, fetchAddUser, fetchUserList } from '@/services/users'
 import { useAppSelector } from '@/store/hooks'
 
 const ReduxToolkitDemo = () => {
   const users = useAppSelector((state) => state.usersState.users)
-
-  const onGetUserList = async () => {
-    // 1~9
-    const id = Math.floor(Math.random() * 9) + 1
-    const res = await fetchUserInfo.call(id)
-    console.log(res, 'res')
-  }
 
   const onGetUsersList = async () => {
     fetchUserList.call()
@@ -30,7 +17,8 @@ const ReduxToolkitDemo = () => {
   }
 
   const onLogin = () => {
-    fetchLogin.call({ username: 'Mike', password: '123' }).then((res: any) => {
+    fetchLogin.call({ username: 'Mike', password: '123' }).then((res) => {
+      console.log(res, 'res')
       localStorage.setItem('token', res.payload.access_token)
     })
   }

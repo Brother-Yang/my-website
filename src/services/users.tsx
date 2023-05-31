@@ -3,6 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { request } from '@/util/request'
 import { store } from '@/store'
 
+type UserType = { password: string; username: string }
+
 export const fetchUserList = (() => {
   const call = createAsyncThunk('users/fetchUserList', async () => {
     const res = await request({ url: `users` })
@@ -26,23 +28,27 @@ export const fetchTokenTest = (() => {
 })()
 
 export const fetchLogin = (() => {
-  const call = createAsyncThunk('users/fetchLogin', async (data: any) => {
-    const res = await request({
-      url: 'login',
-      method: 'POST',
-      data,
-    })
+  const call = createAsyncThunk(
+    'users/fetchLogin',
+    async (data: UserType): Promise<{ access_token: string; code: number }> => {
+      const res = await request<{ access_token: string; code: number }>({
+        url: 'login',
+        method: 'POST',
+        data,
+      })
 
-    return res
-  })
+      return res
+    }
+  )
+
   return {
-    call: (data: any) => store.dispatch(call(data)),
+    call: (data: UserType) => store.dispatch(call(data)),
     type: call.fulfilled.type,
   }
 })()
 
 export const fetchAddUser = (() => {
-  const call = createAsyncThunk('users/fetchAddUser', async (data: any) => {
+  const call = createAsyncThunk('users/fetchAddUser', async (data: UserType & { role: number }) => {
     const res = await request({
       url: 'users',
       method: 'POST',
@@ -52,7 +58,7 @@ export const fetchAddUser = (() => {
     return res
   })
   return {
-    call: (data: any) => store.dispatch(call(data)),
+    call: (data: UserType & { role: number }) => store.dispatch(call(data)),
     type: call.fulfilled.type,
   }
 })()
