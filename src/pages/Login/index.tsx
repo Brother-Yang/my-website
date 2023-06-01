@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-import { Button, Input } from 'antd'
+import { Button, Input } from 'antd';
 
-import styles from './index.less'
+import styles from './index.less';
 
 const Login = () => {
   return (
@@ -21,7 +21,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

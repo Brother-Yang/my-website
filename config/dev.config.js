@@ -1,5 +1,5 @@
-const baseConfig = require('./base.config')
-const { merge } = require('webpack-merge')
+const baseConfig = require('./base.config');
+const { merge } = require('webpack-merge');
 
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
@@ -9,7 +9,7 @@ module.exports = merge(baseConfig, {
     port: 3008,
     open: true,
     // 刷新页面报错
-    historyApiFallback: true,
-  },
+    historyApiFallback: true
+  }
   // plugins: [new BundleAnalyzerPlugin()],
-})
+});

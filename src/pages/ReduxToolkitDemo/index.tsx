@@ -1,31 +1,31 @@
-import React from 'react'
+import React from 'react';
 
-import { Button } from 'antd'
+import { Button } from 'antd';
 
-import { fetchLogin, fetchTokenTest, fetchAddUser, fetchUserList } from '@/services/users'
-import { useAppSelector } from '@/store/hooks'
+import { fetchLogin, fetchTokenTest, fetchAddUser, fetchUserList } from '@/services/users';
+import { useAppSelector } from '@/store/hooks';
 
 const ReduxToolkitDemo = () => {
-  const users = useAppSelector((state) => state.usersState.users)
+  const users = useAppSelector((state) => state.usersState.users);
 
   const onGetUsersList = async () => {
-    fetchUserList.call()
-  }
+    fetchUserList.call();
+  };
 
   const onTokenTest = () => {
-    fetchTokenTest.call()
-  }
+    fetchTokenTest.call();
+  };
 
   const onLogin = () => {
     fetchLogin.call({ username: 'Mike', password: '123' }).then((res) => {
-      console.log(res, 'res')
-      localStorage.setItem('token', res.payload.access_token)
-    })
-  }
+      console.log(res, 'res');
+      localStorage.setItem('token', res.payload.access_token);
+    });
+  };
 
   const onAddUser = () => {
-    fetchAddUser.call({ username: 'Mike', password: '123', role: 1 })
-  }
+    fetchAddUser.call({ username: 'Mike', password: '123', role: 1 });
+  };
 
   return (
     <div style={{ padding: 10 }}>
@@ -51,6 +51,6 @@ const ReduxToolkitDemo = () => {
         </h1>
       </div>
     </div>
-  )
-}
-export default ReduxToolkitDemo
+  );
+};
+export default ReduxToolkitDemo;

@@ -1,20 +1,20 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchUserInfo } from '@/services/users'
+import { fetchUserInfo } from '@/services/users';
 
 interface Users {
   users: {
-    name: string
-    email: string
-  }
+    name: string;
+    email: string;
+  };
 }
 
 const initialState: Users = {
   users: {
     name: '',
-    email: '',
-  },
-}
+    email: ''
+  }
+};
 
 const usersSlice = createSlice({
   name: 'users',
@@ -22,9 +22,9 @@ const usersSlice = createSlice({
   reducers: {},
   extraReducers: {
     [fetchUserInfo.type]: (state, action) => {
-      state.users = action.payload
-    },
-  },
-})
+      state.users = action.payload;
+    }
+  }
+});
 
-export default usersSlice.reducer
+export default usersSlice.reducer;

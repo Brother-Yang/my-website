@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit';
 
-import usersReducer from './usersSlice'
+import usersReducer from './usersSlice';
 
 // 自定义中间件
 // const myLog = (store) => (next) => (action) => {
@@ -11,10 +11,10 @@ import usersReducer from './usersSlice'
 // 官网的例子
 export const store = configureStore({
   reducer: {
-    usersState: usersReducer,
-  },
+    usersState: usersReducer
+  }
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myLog),
-})
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
