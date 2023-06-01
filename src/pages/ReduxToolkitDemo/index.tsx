@@ -2,7 +2,13 @@ import React from 'react';
 
 import { Button } from 'antd';
 
-import { fetchLogin, fetchTokenTest, fetchAddUser, fetchUserList } from '@/services/users';
+import {
+  fetchLogin,
+  fetchTokenTest,
+  fetchAddUser,
+  fetchUserList,
+  fetchUserInfo
+} from '@/services/users';
 import { useAppSelector } from '@/store/hooks';
 
 const ReduxToolkitDemo = () => {
@@ -27,6 +33,10 @@ const ReduxToolkitDemo = () => {
     fetchAddUser.call({ username: 'Mike', password: '123', role: 1 });
   };
 
+  const onUserInfo = () => {
+    fetchUserInfo.call(1);
+  };
+
   return (
     <div style={{ padding: 10 }}>
       <div>
@@ -44,6 +54,10 @@ const ReduxToolkitDemo = () => {
 
         <Button onClick={onTokenTest} type="primary">
           测试
+        </Button>
+
+        <Button onClick={onUserInfo} type="primary">
+          详情
         </Button>
 
         <h1>
