@@ -19,7 +19,7 @@ const ReduxToolkitDemo = () => {
   const onLogin = () => {
     fetchLogin.call({ username: 'Mike', password: '123' }).then((res) => {
       console.log(res, 'res');
-      localStorage.setItem('token', res.payload.access_token);
+      localStorage.setItem('token', res.access_token);
     });
   };
 

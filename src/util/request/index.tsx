@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { notification } from 'antd';
 
-const baseUrl = 'https://jsonplaceholder.typicode.com/';
-// const baseUrl = 'http://localhost:3000/users'
+// const baseUrl = 'https://jsonplaceholder.typicode.com/';
+const baseUrl = 'http://localhost:3000';
 
 axios.defaults.baseURL = baseUrl;
 axios.defaults.timeout = 5000;

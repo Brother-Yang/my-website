@@ -11,7 +11,7 @@ export const fetchUserList = (() => {
     return res;
   });
   return {
-    call: () => store.dispatch(call()),
+    call: () => store.dispatch(call()).unwrap(),
     type: call.fulfilled.type
   };
 })();
@@ -22,7 +22,7 @@ export const fetchTokenTest = (() => {
     return res;
   });
   return {
-    call: () => store.dispatch(call()),
+    call: () => store.dispatch(call()).unwrap(),
     type: call.fulfilled.type
   };
 })();
@@ -42,7 +42,7 @@ export const fetchLogin = (() => {
   );
 
   return {
-    call: (data: UserType) => store.dispatch(call(data)),
+    call: (data: UserType) => store.dispatch(call(data)).unwrap(),
     type: call.fulfilled.type
   };
 })();
@@ -58,7 +58,7 @@ export const fetchAddUser = (() => {
     return res;
   });
   return {
-    call: (data: UserType & { role: number }) => store.dispatch(call(data)),
+    call: (data: UserType & { role: number }) => store.dispatch(call(data)).unwrap(),
     type: call.fulfilled.type
   };
 })();
@@ -69,7 +69,7 @@ export const fetchUserInfo = (() => {
     return res;
   });
   return {
-    call: (id: number) => store.dispatch(call(id)),
+    call: (id: number) => store.dispatch(call(id)).unwrap(),
     type: call.fulfilled.type
   };
 })();
