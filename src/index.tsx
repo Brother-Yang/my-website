@@ -27,7 +27,7 @@ DictConfig();
 
 const locales = {
   'en-US': enUS,
-  'zh-CN': zhCN
+  'zh-CN': zhCN,
 };
 
 intl.init({ currentLocale: 'zh-CN', locales });

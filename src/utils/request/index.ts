@@ -11,7 +11,7 @@ function errorStatus() {
   return {
     401: '未授权，请登录',
     404: '找不到请求资源',
-    500: '系统异常'
+    500: '系统异常',
   };
 }
 
@@ -45,7 +45,7 @@ axios.interceptors.response.use(
 
     notification['error']({
       message: error.response.status,
-      description: errorStatus()[error.response.status as keyof typeof errorStatus]
+      description: errorStatus()[error.response.status as keyof typeof errorStatus],
     });
 
     return Promise.reject(error);
@@ -57,7 +57,7 @@ axios.interceptors.response.use(
  * @param {options} options
  * @returns
  */
-const request = <T,>(options: AxiosRequestConfig): Promise<T> => {
+const request = <T>(options: AxiosRequestConfig): Promise<T> => {
   return new Promise<T>((resolve, reject) => {
     axios(options)
       .then((res) => {

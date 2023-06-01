@@ -7,7 +7,7 @@ import {
   fetchTokenTest,
   fetchAddUser,
   fetchUserList,
-  fetchUserInfo
+  fetchUserInfo,
 } from '@/services/users';
 import { useAppSelector } from '@/store/hooks';
 

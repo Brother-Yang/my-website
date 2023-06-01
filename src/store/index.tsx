@@ -11,8 +11,8 @@ import usersReducer from './usersSlice';
 // 官网的例子
 export const store = configureStore({
   reducer: {
-    usersState: usersReducer
-  }
+    usersState: usersReducer,
+  },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myLog),
 });
 

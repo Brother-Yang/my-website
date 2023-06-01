@@ -25,7 +25,7 @@ type TProps = PropsWithChildren<{
  * @returns
  */
 const getGridTemplateColumns = (count: number, colgroup: string[]) => ({
-  gridTemplateColumns: `repeat(${count}, ${colgroup.toString().replace(',', ' ')})`
+  gridTemplateColumns: `repeat(${count}, ${colgroup.toString().replace(',', ' ')})`,
 });
 
 // !!!目前先考虑这几种情况
@@ -38,7 +38,7 @@ const SystemFormItemGridLayout: FC<TProps> = (props) => {
    */
   const {
     className,
-    data: { width: _width, columnCount, children, colgroup }
+    data: { width: _width, columnCount, children, colgroup },
   } = props;
 
   return (
@@ -72,7 +72,7 @@ export const Value: FC<PropsWithChildren<{ className?: string; colSpan?: number 
       className={classnames(styles.Value, props?.className)}
       style={{
         // 默认值为1
-        gridColumn: `span ${props?.colSpan ?? 1}`
+        gridColumn: `span ${props?.colSpan ?? 1}`,
       }}
     >
       {props.children}

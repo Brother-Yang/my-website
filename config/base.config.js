@@ -8,14 +8,14 @@ module.exports = {
   output: {
     path: path.join(__dirname, './../dist'),
     filename: '[name].[chunkhash:8].js',
-    publicPath: '/'
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
     alias: {
-      '@': path.join(__dirname, './../src')
+      '@': path.join(__dirname, './../src'),
     },
-    mainFields: ['jsnext:main', 'browser', 'main']
+    mainFields: ['jsnext:main', 'browser', 'main'],
   },
   module: {
     rules: [
@@ -23,8 +23,8 @@ module.exports = {
         test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader?cacheDirectory'
-        }
+          loader: 'babel-loader?cacheDirectory',
+        },
       },
       // {
       //   test: /\.css$/i,
@@ -40,35 +40,35 @@ module.exports = {
         include: /node_modules/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader
+            loader: MiniCssExtractPlugin.loader,
           },
           {
-            loader: 'css-loader'
+            loader: 'css-loader',
           },
           'postcss-loader',
           {
             loader: 'less-loader',
             options: {
               lessOptions: {
-                javascriptEnabled: true
-              }
-            }
+                javascriptEnabled: true,
+              },
+            },
           },
           {
             loader: 'style-resources-loader',
             options: {
               patterns: path.resolve(__dirname, './../src/global.less'),
-              injector: 'append'
-            }
-          }
-        ]
+              injector: 'append',
+            },
+          },
+        ],
       },
       {
         test: /\.less$/,
         exclude: /node_modules/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader
+            loader: MiniCssExtractPlugin.loader,
           },
           {
             loader: 'css-loader',
@@ -76,27 +76,27 @@ module.exports = {
               // 开启css模块化
               modules: {
                 namedExport: false,
-                localIdentName: '[path][name]-[local]--[hash:base64:5]'
-              }
-            }
+                localIdentName: '[path][name]-[local]--[hash:base64:5]',
+              },
+            },
           },
           'postcss-loader',
           {
             loader: 'less-loader',
             options: {
               lessOptions: {
-                javascriptEnabled: true
-              }
-            }
+                javascriptEnabled: true,
+              },
+            },
           },
           {
             loader: 'style-resources-loader',
             options: {
               patterns: path.resolve(__dirname, './../src/global.less'),
-              injector: 'append'
-            }
-          }
-        ]
+              injector: 'append',
+            },
+          },
+        ],
       },
       // {
       //   loader: 'style-resources-loader',
@@ -107,16 +107,16 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'react-template',
-      template: './public/index.html'
+      template: './public/index.html',
     }),
     new MiniCssExtractPlugin({ filename: '[name].[contenthash:8].css' }),
-    new CleanWebpackPlugin()
-  ]
+    new CleanWebpackPlugin(),
+  ],
 };

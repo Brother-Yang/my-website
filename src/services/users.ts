@@ -13,12 +13,12 @@ export const fetchLogin = createAsyncThunkByRequest<
   { code: number; access_token: string }
 >({
   url: 'login',
-  method: 'POST'
+  method: 'POST',
 });
 
 export const fetchAddUser = createAsyncThunkByRequest<UserType & { role: number }, unknown>({
   url: 'users',
-  method: 'POST'
+  method: 'POST',
 });
 
 export const fetchUserInfo = createAsyncThunkByCallback(

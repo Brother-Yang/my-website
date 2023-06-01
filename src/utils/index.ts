@@ -17,7 +17,7 @@ export const createAsyncThunkByRequest = <P = unknown, R = unknown>(
   });
   return {
     call: (params?: P) => store.dispatch(call(params)).unwrap(),
-    type: call.fulfilled.type
+    type: call.fulfilled.type,
   };
 };
 
@@ -37,6 +37,6 @@ export const createAsyncThunkByCallback = <P = unknown, R = unknown>(
   );
   return {
     call: (params?: P) => store.dispatch(call(params)).unwrap(),
-    type: call.fulfilled.type
+    type: call.fulfilled.type,
   };
 };

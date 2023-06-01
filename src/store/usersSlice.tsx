@@ -12,8 +12,8 @@ interface Users {
 const initialState: Users = {
   users: {
     name: '',
-    email: ''
-  }
+    email: '',
+  },
 };
 
 const usersSlice = createSlice({
@@ -23,8 +23,8 @@ const usersSlice = createSlice({
   extraReducers: {
     [fetchUserInfo.type]: (state, action) => {
       state.users = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export default usersSlice.reducer;

@@ -10,20 +10,20 @@ const routes = [
   {
     path: '/',
     index: true,
-    element: <Navigate to="login" />
+    element: <Navigate to="login" />,
   },
   {
     path: '/login',
-    element: <Login />
+    element: <Login />,
   },
   {
     path: '/reduxToolkitDemo',
-    element: <ReduxToolkitDemo />
+    element: <ReduxToolkitDemo />,
   },
   {
     path: '*',
-    element: <Error />
-  }
+    element: <Error />,
+  },
 ];
 
 export default routes;

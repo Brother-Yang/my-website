@@ -10,7 +10,7 @@ const Dict = {
   handlers: new Proxy(handlers, {
     set(...args) {
       return Reflect.set(...args);
-    }
+    },
   }),
 
   // 代理同一个值没法缓存
@@ -20,19 +20,19 @@ const Dict = {
       if (!(property in target)) {
         receiver[property] = {
           value: getValue(property),
-          refresh: () => {}
+          refresh: () => {},
         };
       }
 
       return Reflect.get(target, property, receiver);
-    }
+    },
   }),
   init: (dictArr: { initRemote: () => {}; initStatic: () => {} }[]) => {
     dictArr.forEach((item) => {
       item.initRemote();
       item.initStatic();
     });
-  }
+  },
 };
 
 // 判断是函数还是基础值

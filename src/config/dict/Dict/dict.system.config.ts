@@ -18,5 +18,5 @@ export default {
       console.log('SystemRequestApiTest2晕行了');
       return Promise.resolve(arr);
     };
-  }
+  },
 };

@@ -15,16 +15,16 @@ module.exports = merge(baseConfig, {
         terserOptions: {
           // 构建时去除注释
           format: {
-            comments: false
-          }
+            comments: false,
+          },
         },
-        extractComments: false // 是否将注释剥离到单独的文件中
+        extractComments: false, // 是否将注释剥离到单独的文件中
       }),
 
       new CssMinimizerPlugin(),
 
       // Scope Hoisting
-      new webpack.optimize.ModuleConcatenationPlugin()
-    ]
-  }
+      new webpack.optimize.ModuleConcatenationPlugin(),
+    ],
+  },
 });
