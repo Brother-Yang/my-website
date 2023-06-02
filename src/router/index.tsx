@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { Suspense, LazyExoticComponent, lazy } from 'react';
 
 import { Navigate } from 'react-router-dom';
 
-import Error from '@/pages/Error';
-import ReduxToolkitDemo from '@/pages/ReduxToolkitDemo';
-import Login from '@/pages/Login';
+function lazyLoad(Component: LazyExoticComponent<any>): React.ReactNode {
+  return (
+    <Suspense fallback={null}>
+      <Component />
+    </Suspense>
+  );
+}
 
 const routes = [
   {
@@ -14,15 +18,15 @@ const routes = [
   },
   {
     path: '/login',
-    element: <Login />,
+    element: lazyLoad(lazy(() => import('@/pages/Login'))),
   },
   {
     path: '/reduxToolkitDemo',
-    element: <ReduxToolkitDemo />,
+    element: lazyLoad(lazy(() => import('@/pages/ReduxToolkitDemo'))),
   },
   {
     path: '*',
-    element: <Error />,
+    element: lazyLoad(lazy(() => import('@/pages/Error'))),
   },
 ];
 
