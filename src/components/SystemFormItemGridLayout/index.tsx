@@ -57,6 +57,9 @@ const SystemFormItemGridLayout: FC<TProps> = (props) => {
 };
 
 export const Label: FC<PropsWithChildren<{ className?: string; require?: boolean }>> = (props) => {
+  if (!props.children) {
+    return <div></div>;
+  }
   return (
     <div
       className={classnames(styles.Label, props?.className, props?.require ? styles.Require : null)}
