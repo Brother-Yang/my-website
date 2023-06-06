@@ -1,4 +1,4 @@
-import React, { Suspense, LazyExoticComponent, lazy } from 'react';
+import React, { Suspense, type LazyExoticComponent, lazy } from 'react';
 
 import { Navigate } from 'react-router-dom';
 

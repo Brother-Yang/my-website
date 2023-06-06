@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { type AxiosRequestConfig } from 'axios';
 import { notification } from 'antd';
 
 // const baseUrl = 'https://jsonplaceholder.typicode.com/';
