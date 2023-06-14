@@ -25,6 +25,10 @@ const routes = [
     element: lazyLoad(lazy(() => import('@/pages/ReduxToolkitDemo'))),
   },
   {
+    path: '/about',
+    element: lazyLoad(lazy(() => import('@/pages/About'))),
+  },
+  {
     path: '*',
     element: lazyLoad(lazy(() => import('@/pages/Error'))),
   },
