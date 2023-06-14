@@ -12,14 +12,25 @@
     //
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     //
     "downlevelIteration": true,
     // json
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "lib": [
+      "ES2015.Promise",
+      "dom",
+      "dom.iterable",
+      "es2018"
+    ]
   },
-
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
