@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 22:52:29
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-15 23:04:51
+ * @LastEditTime: 2023-06-15 23:07:20
  * @Description: 欢迎文本
  */
 
@@ -33,6 +33,11 @@ export class WelcomeScreen {
   }
 
   init() {
+    this.initTexts();
+    this.initLineBg();
+  }
+
+  initLineBg() {
     ThreeHelper.instance.loadGltf('/models/line_bg.glb').then((gltf) => {
       const line_bg = gltf.scene.getObjectByName('line_bg');
 
@@ -85,7 +90,9 @@ export class WelcomeScreen {
         });
       }
     });
+  }
 
+  initTexts() {
     this.textArr.forEach((arr, arrIndex) => {
       const length = arr.length / 2 - 1;
       const textGroup = new Group();
