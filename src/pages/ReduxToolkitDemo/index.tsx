@@ -11,6 +11,8 @@ import {
 } from '@/services/users';
 import { useAppSelector } from '@/store/hooks';
 
+import styles from './index.less';
+
 const ReduxToolkitDemo = () => {
   const users = useAppSelector((state) => state.usersState.users);
 
@@ -60,7 +62,7 @@ const ReduxToolkitDemo = () => {
           详情
         </Button>
 
-        <h1>
+        <h1 className={styles.TextColor}>
           {users.email} ------- {users.name}
         </h1>
       </div>
