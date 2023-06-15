@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2022-12-10 11:12:36
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-14 10:47:57
+ * @LastEditTime: 2023-06-15 16:59:56
  * @Description:初始化环境
  */
 import * as THREE from 'three';
@@ -81,10 +81,10 @@ export class BaseEnvironment extends ModelsLoad {
    * 添加灯光
    */
   initLights() {
-    const hemisphereLight = new THREE.HemisphereLight(0xdddddd, 0xffffff, 0.8);
+    const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0xdddddd, 0.8);
     hemisphereLight.position.set(0, -2, 110);
-    // 平行光 默认从上往下照 position =  Object3D.DEFAULT_UP
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.45);
+    // 平行光 默认从上往下照 position =  Object3D.DEFA 我ULT_UP
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.95);
     this.lights = [hemisphereLight, directionalLight];
     this.scene.add(...this.lights);
   }

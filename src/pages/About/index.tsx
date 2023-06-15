@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:30:59
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-15 11:57:33
+ * @LastEditTime: 2023-06-15 20:17:21
  * @Description: 关于洋少页 - 宏斌撰
  */
 import React, { useEffect, useRef } from 'react';
@@ -15,6 +15,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { WelcomeScreen } from './screen/WelcomeScreen';
+import { MouseMove } from './Helper/MouseMove';
 
 interface IProps {}
 
@@ -53,13 +54,12 @@ const About: FC<IProps> = () => {
 export default About;
 
 async function init(helper: ThreeHelper) {
-  helper.camera.position.set(0, 0, 60);
+  helper.camera.position.set(0, 0, 10);
   helper.frameByFrame();
-  helper.useRoomEnvironment(true);
-  // helper.controls.enabled = false;
+  helper.controls.enabled = false;
   // helper.useSkyEnvironment();
-  helper.initLights();
-  helper.addAxis();
+  helper.useRoomEnvironment();
+  // helper.addAxis();
 
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -75,11 +75,17 @@ async function init(helper: ThreeHelper) {
   });
 
   new WelcomeScreen();
+  const mouseMove = new MouseMove();
+
+  destroyEvent.push(() => {
+    mouseMove.dispose();
+  });
 }
 
 const Container = styled.div`
   width: 100vw;
   height: 500vh;
+  background-color: #000000;
 `;
 
 const FixedCanvasWrap = styled.div`
