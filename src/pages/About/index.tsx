@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:30:59
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-14 18:23:22
+ * @LastEditTime: 2023-06-15 11:57:33
  * @Description: 关于洋少页 - 宏斌撰
  */
 import React, { useEffect, useRef } from 'react';
@@ -14,6 +14,7 @@ import { CanvasFontMesh } from './CanvasFontMesh';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { WelcomeScreen } from './screen/WelcomeScreen';
 
 interface IProps {}
 
@@ -52,19 +53,13 @@ const About: FC<IProps> = () => {
 export default About;
 
 async function init(helper: ThreeHelper) {
-  helper.camera.position.set(0, 0, 10);
+  helper.camera.position.set(0, 0, 60);
   helper.frameByFrame();
   helper.useRoomEnvironment(true);
-  helper.controls.enabled = false;
+  // helper.controls.enabled = false;
   // helper.useSkyEnvironment();
   helper.initLights();
-
-  new CanvasFontMesh('🌈', new THREE.Vector3(-2, 0, 0));
-  new CanvasFontMesh('👏');
-  new CanvasFontMesh('🎉', new THREE.Vector3(2, 0, 0));
-  new CanvasFontMesh('李', new THREE.Vector3(-2, -2, 0));
-  new CanvasFontMesh('苏', new THREE.Vector3(0, -2, 0));
-  new CanvasFontMesh('洋', new THREE.Vector3(2, -2, 0));
+  helper.addAxis();
 
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -79,30 +74,7 @@ async function init(helper: ThreeHelper) {
     },
   });
 
-  const p = { x: 0 };
-
-  timeline.to(
-    p,
-    {
-      x: 3,
-      duration: 1,
-      onUpdate: () => {
-        console.log(p);
-      },
-    },
-    3
-  );
-  timeline.to(
-    p,
-    {
-      x: 0,
-      duration: 1,
-      onUpdate: () => {
-        console.log(1, p);
-      },
-    },
-    2
-  );
+  new WelcomeScreen();
 }
 
 const Container = styled.div`
