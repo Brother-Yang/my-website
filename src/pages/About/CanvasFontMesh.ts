@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:46:55
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-14 10:46:57
+ * @LastEditTime: 2023-06-15 11:41:55
  * @Description:  canvas 绘制立体文字
  */
 
@@ -67,9 +67,9 @@ export class CanvasFontMesh extends Canvas {
       );
     };
 
-    this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2, 80, 80), material);
+    this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2, 50, 50), material);
 
     this.mesh.position.copy(position);
-    ThreeHelper.instance.add(this.mesh);
+    // ThreeHelper.instance.add(this.mesh);
   }
 }
