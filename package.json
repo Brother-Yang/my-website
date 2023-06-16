@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@babel/runtime": "^7.17.9",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@reduxjs/toolkit": "^1.8.1",
     "@types/react": "^18.2.12",
     "@types/styled-components": "^5.1.26",
@@ -31,6 +32,7 @@
     "react-dom": "^18.1.0",
     "react-intl-universal": "^2.6.15",
     "react-redux": "^8.0.1",
+    "react-refresh": "^0.14.0",
     "react-router-dom": "^6.3.0",
     "redux-logger": "^3.0.6",
     "styled-components": "6.0.0-rc.3",

@@ -29,6 +29,9 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader?cacheDirectory',
+          options: {
+            plugins: [isDev && 'react-refresh/babel'].filter(Boolean),
+          },
         },
       },
       // {
