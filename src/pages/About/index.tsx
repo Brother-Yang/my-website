@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:30:59
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-15 20:17:21
+ * @LastEditTime: 2023-06-16 20:48:38
  * @Description: 关于洋少页 - 宏斌撰
  */
 import React, { useEffect, useRef } from 'react';
@@ -16,6 +16,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { WelcomeScreen } from './screen/WelcomeScreen';
 import { MouseMove } from './Helper/MouseMove';
+import { ComputerScreen } from './screen/ComputerScreen';
 
 interface IProps {}
 
@@ -63,18 +64,19 @@ async function init(helper: ThreeHelper) {
 
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-  const timeline = gsap.timeline({
-    scrollTrigger: {
-      trigger: '#container',
-      start: 0,
-      end: document.getElementById('container').offsetHeight - innerHeight,
-      //   onUpdate: (event) => {
-      //     console.log(event, event.progress);
-      //   },
-    },
-  });
+  // const timeline = gsap.timeline({
+  //   scrollTrigger: {
+  //     trigger: '#container',
+  //     start: 0,
+  //     end: document.getElementById('container').offsetHeight - innerHeight,
+  //     //   onUpdate: (event) => {
+  //     //     console.log(event, event.progress);
+  //     //   },
+  //   },
+  // });
 
   new WelcomeScreen();
+  new ComputerScreen();
   const mouseMove = new MouseMove();
 
   destroyEvent.push(() => {
