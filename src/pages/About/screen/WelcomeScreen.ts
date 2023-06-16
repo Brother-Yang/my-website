@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 22:52:29
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-15 23:07:20
+ * @LastEditTime: 2023-06-16 20:35:33
  * @Description: 欢迎文本
  */
 
@@ -16,7 +16,6 @@ export class WelcomeScreen {
   group = new Group();
   textGroupWrap = new Group();
   textRandom: { mesh: Mesh; prev: { x: number; y: number; z: number; opacity: number } }[][] = [
-    [],
     [],
     [],
     [],
@@ -114,7 +113,7 @@ export class WelcomeScreen {
           ease: 'power2.in',
         });
 
-        this.textRenderIndex(text.mesh, to);
+        this.textRenderIndex(text.mesh, to, arrIndex);
       });
       textGroup.position.x = -length * 1.5;
       this.group.add(this.textGroupWrap);
@@ -122,9 +121,11 @@ export class WelcomeScreen {
     });
   }
 
-  textRenderIndex(mesh: Mesh, vec: { x: number; y: number; z: number }) {
-    const index = Math.floor(Math.random() * 4);
-    this.textRandom[index].push({ mesh, prev: { ...vec, opacity: 1 } });
+  textRenderIndex(mesh: Mesh, vec: { x: number; y: number; z: number }, arrIndex: number) {
+    // const index = Math.floor(Math.random() * 3);
+    // this.textRandom[index].push({ mesh, prev: { ...vec, opacity: 1 } });
+
+    this.textRandom[arrIndex].push({ mesh, prev: { ...vec, opacity: 1 } });
   }
 
   textLeave(leave = true) {
