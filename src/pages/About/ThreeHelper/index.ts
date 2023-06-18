@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2022-12-10 08:23:15
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-14 10:50:06
+ * @LastEditTime: 2023-06-18 09:03:31
  * @Description:Three.js 包装类
  */
 import * as THREE from 'three';
@@ -29,6 +29,17 @@ export class ThreeHelper extends BaseEnvironment {
     super(params);
     if (ThreeHelper.instance) return ThreeHelper.instance;
     ThreeHelper.instance = this;
+  }
+
+  computeViewSize() {
+    const vFOV = THREE.MathUtils.degToRad(this.camera.fov);
+    const height = 2 * Math.tan(vFOV / 2) * this.camera.position.z;
+    const width = height * this.camera.aspect;
+
+    return {
+      height,
+      width,
+    };
   }
 
   /**

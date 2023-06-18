@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2022-10-21 08:49:42
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-14 10:50:37
+ * @LastEditTime: 2023-06-18 09:15:20
  * @Description:全局类型 需要
  */
 
@@ -15,6 +15,8 @@ declare type Mesh<
   TGeometry extends THREE.BufferGeometry = THREE.BufferGeometry,
   TMaterial extends THREE.Material | THREE.Material[] = THREE.Material | THREE.Material[]
 > = THREE.Mesh;
+
+declare type StandardMesh = THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
 
 /**
  * 全局定义花式打印类型 需要定义全局变量

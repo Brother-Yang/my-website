@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:30:59
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-16 20:48:38
+ * @LastEditTime: 2023-06-18 20:14:48
  * @Description: 关于洋少页 - 宏斌撰
  */
 import React, { useEffect, useRef } from 'react';
@@ -27,21 +27,23 @@ const About: FC<IProps> = () => {
 
   useEffect(() => {
     if (canvasRef.current) {
+      destroyEvent.forEach((f) => f());
+
       const helper = new ThreeHelper({
         antialias: true,
         canvas: canvasRef.current,
       });
+
+      helper.clearScene();
+      helper.stopFrame();
+      helper.removeResizeListen();
+
       init(helper);
       helper.listenResize();
 
-      return () => {
-        destroyEvent.forEach((f) => f());
-        helper.clearScene();
-        helper.stopFrame();
-        helper.removeResizeListen();
-      };
+      return () => {};
     }
-  }, [init]);
+  }, []);
 
   return (
     <Container id="container">
@@ -57,7 +59,8 @@ export default About;
 async function init(helper: ThreeHelper) {
   helper.camera.position.set(0, 0, 10);
   helper.frameByFrame();
-  helper.controls.enabled = false;
+  helper.controls.enableZoom = false;
+  helper.controls.enablePan = false;
   // helper.useSkyEnvironment();
   helper.useRoomEnvironment();
   // helper.addAxis();
