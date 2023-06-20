@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-16 20:46:18
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-18 18:41:20
+ * @LastEditTime: 2023-06-19 11:55:32
  * @Description:第二屏幕 "电脑"
  */
 
@@ -67,6 +67,7 @@ export class ComputerScreen {
     });
 
     const screen = this.group.getObjectByName('屏幕') as StandardMesh;
+    screen.material.color.setScalar(0);
 
     gsap.timeline({
       scrollTrigger: {
@@ -97,6 +98,25 @@ export class ComputerScreen {
         end: innerHeight * 3.5,
         onUpdate: (event) => {
           progressBar.scale.x = event.progress;
+        },
+        onLeave: (e) => {
+          console.log('leave');
+        },
+        onEnterBack: () => {
+          console.log('onEnterBack');
+        },
+      },
+    });
+
+    const apple_logo = loadContainer.getObjectByName('apple_logo') as StandardMesh;
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: '#container',
+        start: innerHeight * 3.5,
+        end: innerHeight * 4.5,
+        onUpdate: (event) => {
+          this.group.position.z = 6 + event.progress * 6;
         },
         onLeave: (e) => {
           console.log('leave');

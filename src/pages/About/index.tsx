@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:30:59
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-18 20:14:48
+ * @LastEditTime: 2023-06-20 08:47:13
  * @Description: 关于洋少页 - 宏斌撰
  */
 import React, { useEffect, useRef } from 'react';
@@ -63,7 +63,7 @@ async function init(helper: ThreeHelper) {
   helper.controls.enablePan = false;
   // helper.useSkyEnvironment();
   helper.useRoomEnvironment();
-  // helper.addAxis();
+  helper.addAxis();
 
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -89,7 +89,7 @@ async function init(helper: ThreeHelper) {
 
 const Container = styled.div`
   width: 100vw;
-  height: 500vh;
+  height: 1000vh;
   background-color: #000000;
 `;
 
