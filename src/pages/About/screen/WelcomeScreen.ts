@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 22:52:29
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-20 20:13:22
+ * @LastEditTime: 2023-06-20 20:21:15
  * @Description: 欢迎文本
  */
 
@@ -29,6 +29,7 @@ export class WelcomeScreen {
       this.group.position.z = (1 - this.attr.opacity) * -5;
     },
   });
+  opacityQuickToIns: gsap.core.Tween;
 
   constructor() {
     this.init();
@@ -45,56 +46,55 @@ export class WelcomeScreen {
   initLineBg() {
     ThreeHelper.instance.loadGltf('/models/line_bg.glb').then((gltf) => {
       const line_bg = gltf.scene.getObjectByName('line_bg');
+      if (!line_bg) return;
 
-      if (line_bg) {
-        const lineGroupWrap = new Group();
+      const lineGroupWrap = new Group();
 
-        const lineGroup = modelSurround({ model: line_bg, radius: 10, count: 25 });
-        lineGroup.position.z = -150;
+      const lineGroup = modelSurround({ model: line_bg, radius: 10, count: 25 });
+      lineGroup.position.z = -150;
+      lineGroupWrap.add(lineGroup);
+      {
+        const lineGroup = modelSurround({ model: line_bg, radius: 15, count: 25 });
         lineGroupWrap.add(lineGroup);
-        {
-          const lineGroup = modelSurround({ model: line_bg, radius: 15, count: 25 });
-          lineGroupWrap.add(lineGroup);
-          lineGroup.position.z = -180;
-        }
-        this.group.add(lineGroupWrap);
-        lineGroupWrap.position.y -= 1;
-        lineGroupWrap.position.z = -300;
-
-        const params = {
-          rotateY: lineGroupWrap.rotation.y,
-          posZ: lineGroupWrap.position.z,
-        };
-
-        gsap.to(params, {
-          rotateY: 0,
-          posZ: 100,
-          duration: 1,
-          onUpdate: () => {
-            lineGroupWrap.position.z = params.posZ;
-          },
-        });
-
-        gsap.timeline({
-          scrollTrigger: {
-            trigger: '#container',
-            start: 0,
-            end: innerHeight,
-            onUpdate: (event) => {
-              lineGroupWrap.position.z = 100 + event.progress * 80;
-              this.textGroupWrap.position.z = -5 * event.progress;
-            },
-            onLeave: (e) => {
-              console.log('leave');
-              this.opacityQuickTo(0);
-            },
-            onEnterBack: () => {
-              console.log('onEnterBack');
-              this.opacityQuickTo(1);
-            },
-          },
-        });
+        lineGroup.position.z = -180;
       }
+      this.group.add(lineGroupWrap);
+      lineGroupWrap.position.y -= 1;
+      lineGroupWrap.position.z = -300;
+
+      const params = {
+        rotateY: lineGroupWrap.rotation.y,
+        posZ: lineGroupWrap.position.z,
+      };
+
+      gsap.to(params, {
+        rotateY: 0,
+        posZ: 100,
+        duration: 1,
+        onUpdate: () => {
+          lineGroupWrap.position.z = params.posZ;
+        },
+      });
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: '#container',
+          start: 0,
+          end: innerHeight,
+          onUpdate: (event) => {
+            lineGroupWrap.position.z = 100 + event.progress * 80;
+            this.textGroupWrap.position.z = -5 * event.progress;
+          },
+          onLeave: (e) => {
+            console.log('leave');
+            this.opacityQuickToIns = this.opacityQuickTo(0).play();
+          },
+          onEnterBack: () => {
+            console.log('onEnterBack');
+            this.opacityQuickToIns = this.opacityQuickTo(1).play();
+          },
+        },
+      });
     });
   }
 

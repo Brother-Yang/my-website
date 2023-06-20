@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:30:59
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-20 20:06:15
+ * @LastEditTime: 2023-06-20 20:22:14
  * @Description: 关于洋少页 - 宏斌撰
  */
 import React, { useEffect, useRef } from 'react';
@@ -81,6 +81,7 @@ async function init(helper: ThreeHelper) {
       onUpdate: (event) => {
         spotLight.angle = 0.3 + event.progress;
         welcomeScreen.setOpacity(event.progress);
+        if (welcomeScreen.opacityQuickToIns) welcomeScreen.opacityQuickToIns.pause();
       },
       onLeave: (e) => {},
       onEnterBack: () => {},

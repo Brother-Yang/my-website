@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-15 12:00:21
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-20 09:02:42
+ * @LastEditTime: 2023-06-20 20:28:24
  * @Description: 鼠标移动 镜头晃动
  */
 
@@ -22,9 +22,13 @@ export class MouseMove {
   yQuickTo = gsap.quickTo(ThreeHelper.instance.camera.position, 'y', {
     duration: 0.5,
   });
+  xQuickToTween: gsap.core.Tween;
+  yQuickToTween: gsap.core.Tween;
 
   constructor() {
     this.init();
+    // ThreeHelper.instance.controls.maxAzimuthAngle =
+    // ThreeHelper.instance.controls.maxPolarAngle
   }
 
   mousemove(e: MouseEvent) {
@@ -34,13 +38,16 @@ export class MouseMove {
     this.point.divide(this.viewCenter).divideScalar(10);
     this.point.add(this.initCameraPosition);
     // console.log(this.point);
-    this.xQuickTo(this.point.x);
-    this.yQuickTo(this.point.y);
+    this.xQuickToTween = this.xQuickTo(this.point.x).play();
+    this.yQuickToTween = this.yQuickTo(this.point.y).play();
   }
 
   mousedown(e: MouseEvent) {
+    if (this.pause) return;
     this.pause = true;
     this.prevCameraPosition.copy(ThreeHelper.instance.camera.position);
+    this.xQuickToTween.pause();
+    this.yQuickToTween.pause();
     document.addEventListener('mouseup', this.selfMouseUp, { once: true });
   }
 
