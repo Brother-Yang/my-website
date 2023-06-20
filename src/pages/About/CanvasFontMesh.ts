@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:46:55
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-15 11:41:55
+ * @LastEditTime: 2023-06-20 10:25:21
  * @Description:  canvas 绘制立体文字
  */
 
@@ -28,7 +28,7 @@ class Canvas {
     //绘制文字
     this.ctx.font = `${200 * accuracy}px Georgia`;
     this.ctx.textAlign = 'center';
-    this.ctx.fillStyle = '#ffffff';
+    this.ctx.fillStyle = '#999';
     this.ctx.fillText(font, 110 * accuracy, 190 * accuracy);
 
     this.texture.needsUpdate = true;

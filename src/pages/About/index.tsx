@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:30:59
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-20 08:47:13
+ * @LastEditTime: 2023-06-20 20:06:15
  * @Description: 关于洋少页 - 宏斌撰
  */
 import React, { useEffect, useRef } from 'react';
@@ -62,24 +62,32 @@ async function init(helper: ThreeHelper) {
   helper.controls.enableZoom = false;
   helper.controls.enablePan = false;
   // helper.useSkyEnvironment();
-  helper.useRoomEnvironment();
-  helper.addAxis();
+  // helper.useRoomEnvironment();
+  // helper.addAxis();
 
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-  // const timeline = gsap.timeline({
-  //   scrollTrigger: {
-  //     trigger: '#container',
-  //     start: 0,
-  //     end: document.getElementById('container').offsetHeight - innerHeight,
-  //     //   onUpdate: (event) => {
-  //     //     console.log(event, event.progress);
-  //     //   },
-  //   },
-  // });
+  const spotLight = new THREE.SpotLight(new THREE.Color('#ffffff'), 2, 2, 0.3, 1, 0);
+  helper.camera.add(spotLight);
+  helper.add(helper.camera);
 
-  new WelcomeScreen();
-  new ComputerScreen();
+  const welcomeScreen = new WelcomeScreen();
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '#container',
+      start: 0,
+      end: innerHeight / 2,
+      onUpdate: (event) => {
+        spotLight.angle = 0.3 + event.progress;
+        welcomeScreen.setOpacity(event.progress);
+      },
+      onLeave: (e) => {},
+      onEnterBack: () => {},
+    },
+  });
+
+  // new ComputerScreen();
   const mouseMove = new MouseMove();
 
   destroyEvent.push(() => {

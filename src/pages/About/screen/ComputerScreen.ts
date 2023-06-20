@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-16 20:46:18
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-19 11:55:32
+ * @LastEditTime: 2023-06-20 09:57:44
  * @Description:第二屏幕 "电脑"
  */
 
@@ -41,10 +41,10 @@ export class ComputerScreen {
 
   enterAnimation() {
     const prevRotateY = Math.PI / 2;
-    this.group.rotation.y = prevRotateY;
-    this.group.position.x = -15;
+    // this.group.rotation.y = prevRotateY;
+    // this.group.position.x = -15;
     this.group.position.y = -0.3;
-
+    this.group.position.z = 6;
     const loadContainer = this.group.getObjectByName('loadContainer') as Object3D;
 
     gsap.timeline({
@@ -54,8 +54,8 @@ export class ComputerScreen {
         end: innerHeight * 2,
         onUpdate: (event) => {
           const p = 1 - event.progress;
-          this.group.position.x = -15 * p;
-          this.group.rotation.y = prevRotateY * p;
+          this.group.position.y = p * 10;
+          // this.group.rotation.y = prevRotateY * p;
         },
         onLeave: (e) => {
           console.log('leave');
@@ -68,6 +68,7 @@ export class ComputerScreen {
 
     const screen = this.group.getObjectByName('屏幕') as StandardMesh;
     screen.material.color.setScalar(0);
+    screen.material.roughness = 0;
 
     gsap.timeline({
       scrollTrigger: {
@@ -76,8 +77,10 @@ export class ComputerScreen {
         end: innerHeight * 2.5,
         onUpdate: (event) => {
           const p = event.progress;
-          this.group.position.z = 6 * p;
-          screen.material.color.setScalar(event.progress * 0.1);
+          // this.group.position.z = 6 * p;
+          // screen.material.color.setScalar(event.progress * 0.1);
+          screen.material.metalness = event.progress;
+          // screen.material.roughness = 1 - event.progress;
           loadContainer.position.z = p * 0.04;
         },
         onLeave: (e) => {

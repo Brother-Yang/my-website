@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 22:52:29
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-16 20:35:33
+ * @LastEditTime: 2023-06-20 20:13:22
  * @Description: 欢迎文本
  */
 
@@ -15,23 +15,29 @@ import { modelSurround } from '../Helper/ModelSurround';
 export class WelcomeScreen {
   group = new Group();
   textGroupWrap = new Group();
-  textRandom: { mesh: Mesh; prev: { x: number; y: number; z: number; opacity: number } }[][] = [
-    [],
-    [],
-    [],
-  ];
-
   textArr = [
-    ['W', 'e', 'l', 'c', 'o', 'm', 'e'],
-    ['👏', '🎉'],
-    ['滚', '动', '浏', '览'],
+    { str: ['H', 'E', 'L', 'L', '😄'], params: { space: 1.5 } },
+    { str: ['滚', '动', '浏', '览'], params: { size: [0.15, 0.15, 0.1], space: 0.3 } },
   ];
+  setOpacity: (opacity: number) => void;
+  attr = { opacity: 1 };
+  opacityQuickTo = gsap.quickTo(this.attr, 'opacity', {
+    duration: 0.4,
+    ease: 'power2',
+    onUpdate: () => {
+      this.setOpacity(this.attr.opacity);
+      this.group.position.z = (1 - this.attr.opacity) * -5;
+    },
+  });
 
   constructor() {
     this.init();
   }
 
   init() {
+    this.group.add(this.textGroupWrap);
+    ThreeHelper.instance.add(this.group);
+
     this.initTexts();
     this.initLineBg();
   }
@@ -76,14 +82,15 @@ export class WelcomeScreen {
             end: innerHeight,
             onUpdate: (event) => {
               lineGroupWrap.position.z = 100 + event.progress * 80;
+              this.textGroupWrap.position.z = -5 * event.progress;
             },
             onLeave: (e) => {
               console.log('leave');
-              this.textLeave();
+              this.opacityQuickTo(0);
             },
             onEnterBack: () => {
               console.log('onEnterBack');
-              this.textLeave(false);
+              this.opacityQuickTo(1);
             },
           },
         });
@@ -91,85 +98,61 @@ export class WelcomeScreen {
     });
   }
 
-  initTexts() {
-    this.textArr.forEach((arr, arrIndex) => {
-      const length = arr.length / 2 - 1;
-      const textGroup = new Group();
-      this.textGroupWrap.add(textGroup);
-      arr.forEach((str, strIndex) => {
-        const text = new CanvasFontMesh(str);
-        text.mesh.material.transparent = true;
-        textGroup.add(text.mesh);
-        text.mesh.position.x = strIndex * 1.5 * (0.5 - Math.random()) * 20;
-        text.mesh.position.y = arrIndex * 2 * (0.5 - Math.random()) * 20;
-        text.mesh.position.z = Math.random() * 180;
-
-        const to = { x: strIndex * 1.7, y: arrIndex * -2, z: -10 };
-
-        gsap.to(text.mesh.position, {
-          ...to,
-          duration: 1 + (0.5 - Math.random()),
-          delay: strIndex * 0.1,
-          ease: 'power2.in',
-        });
-
-        this.textRenderIndex(text.mesh, to, arrIndex);
-      });
-      textGroup.position.x = -length * 1.5;
-      this.group.add(this.textGroupWrap);
-      ThreeHelper.instance.add(this.group);
+  geoParagraph({ str, params }: (typeof this.textArr)[number]) {
+    const textGroup = new Group();
+    const length = str.length / 2 - 1;
+    str.forEach((str, strIndex) => {
+      const text = new CanvasFontMesh(str);
+      text.mesh.material.transparent = true;
+      text.mesh.position.x = strIndex * params.space;
+      if (params.size) text.mesh.geometry.scale(params.size[0], params.size[1], params.size[2]);
+      textGroup.add(text.mesh);
     });
+    textGroup.position.x = -length * params.space;
+    return textGroup;
   }
 
-  textRenderIndex(mesh: Mesh, vec: { x: number; y: number; z: number }, arrIndex: number) {
-    // const index = Math.floor(Math.random() * 3);
-    // this.textRandom[index].push({ mesh, prev: { ...vec, opacity: 1 } });
+  initTexts() {
+    const title = this.geoParagraph(this.textArr[0]);
+    const desc = this.geoParagraph(this.textArr[1]);
+    desc.rotation.x = -0.15;
+    desc.position.set(0, -1, 4);
 
-    this.textRandom[arrIndex].push({ mesh, prev: { ...vec, opacity: 1 } });
-  }
+    this.textGroupWrap.add(title, desc);
 
-  textLeave(leave = true) {
-    if (leave) {
-      this.textRandom.forEach((texts) => {
-        texts.forEach(({ mesh, prev }) => {
-          const prevVec = { ...prev };
-
-          const dir = 0.5 - Math.random() > 0 ? 1 : -1;
-
-          gsap.to(prevVec, {
-            z: (0.7 + Math.random()) * 13 * dir,
-            opacity: 0,
-            duration: 0.5,
-            onUpdate: () => {
-              mesh.position.z = prevVec.z;
-              // @ts-ignore
-              mesh.material.opacity = prevVec.opacity;
-            },
-            onComplete: () => {
-              this.textGroupWrap.visible = false;
-            },
-          });
-        });
+    this.setOpacity = (opacity: number) => {
+      this.group.traverse((obj) => {
+        if (obj.type == 'Mesh') {
+          const mesh = obj as StandardMesh;
+          mesh.material.opacity = opacity;
+        }
       });
-    } else {
-      this.textRandom.forEach((texts) => {
-        texts.forEach(({ mesh, prev }) => {
-          const prevVec = { ...mesh.position, opacity: 0 };
-          gsap.to(prevVec, {
-            ...prev,
-            opacity: 1,
-            duration: 0.5,
-            onUpdate: () => {
-              mesh.position.set(prevVec.x, prevVec.y, prevVec.z);
-              // @ts-ignore
-              mesh.material.opacity = prevVec.opacity;
-            },
-            onStart: () => {
-              this.textGroupWrap.visible = true;
-            },
-          });
-        });
-      });
-    }
+    };
+
+    this.setOpacity(0);
+
+    // title.position.y = 10;
+    // gsap.to(title.position, {
+    //   y: 0,
+    //   duration: 1,
+    //   ease: 'power2',
+    // });
+
+    // desc.position.y = -10;
+    // desc.position.z = 10;
+
+    // gsap.to(desc.position, {
+    //   y: -1,
+    //   z: 4,
+    //   duration: 1,
+    //   ease: 'power2',
+    //   onComplete: function () {
+    //     gsap.to(desc.rotation, {
+    //       x: -3.17 * 2,
+    //       duration: 0.5,
+    //       ease: 'power2',
+    //     });
+    //   },
+    // });
   }
 }
