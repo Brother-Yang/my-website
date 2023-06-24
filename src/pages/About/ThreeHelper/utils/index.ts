@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-01-07 10:12:47
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-15 17:16:32
+ * @LastEditTime: 2023-06-24 20:58:47
  * @Description:
  */
 import * as THREE from 'three';
@@ -62,4 +62,14 @@ export const getBoxSize = (obj: Object3D) => {
   _box3.setFromObject(obj);
   _box3.getSize(_vec3);
   return _vec3;
+};
+
+export const getWindowSize = (camera: THREE.PerspectiveCamera) => {
+  const angle = (camera.fov / 2) * (Math.PI / 180);
+  const height = 2 * Math.tan(angle) * camera.position.z;
+
+  return {
+    height,
+    width: height * camera.aspect,
+  };
 };

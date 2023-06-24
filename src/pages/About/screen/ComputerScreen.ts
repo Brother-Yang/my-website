@@ -2,20 +2,34 @@
  * @Author: hongbin
  * @Date: 2023-06-16 20:46:18
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-20 09:57:44
+ * @LastEditTime: 2023-06-24 21:59:12
  * @Description:第二屏幕 "电脑"
  */
 
-import { Group } from 'three';
+import { Box3Helper, Group } from 'three';
 import { ThreeHelper } from '../ThreeHelper';
 import { gsap } from 'gsap';
+import { MyEnvironment } from './MyEnv';
+import { getBoxSize, getWindowSize } from '../ThreeHelper/utils';
 
 export class ComputerScreen {
   group = new Group();
+  onEnter = () => {};
 
   constructor() {
     this.loadModel();
     ThreeHelper.instance.add(this.group);
+  }
+
+  /**
+   * 将模型设置到窗口上方
+   */
+  setModelOnWindowAbove(model: Object3D) {
+    const windowHeight = getWindowSize(ThreeHelper.instance.camera).height / 2;
+    const boxSize = getBoxSize(model);
+    // 除却y轴 如果z轴很宽 那么后面也会漏出来 所以加上z轴长度
+    const modelHeight = boxSize.y / 2 + boxSize.z / 2;
+    return modelHeight + windowHeight;
   }
 
   loadModel() {
@@ -23,6 +37,19 @@ export class ComputerScreen {
       console.log(gltf);
       this.group.add(gltf.scene);
       this.enterAnimation();
+
+      const y = this.setModelOnWindowAbove(gltf.scene);
+      this.group.position.y = y;
+      this.group.userData.startPositionY = y;
+
+      const env = MyEnvironment();
+      const envMap = ThreeHelper.instance.pmremGenerator.fromScene(env, 0.01).texture;
+
+      gltf.scene.traverse((obj: StandardMesh) => {
+        if (obj.isMesh) {
+          obj.material.envMap = envMap;
+        }
+      });
 
       const 底座 = gltf.scene.getObjectByName('底座') as StandardMesh;
       const apple_logo = gltf.scene.getObjectByName('apple_logo') as StandardMesh;
@@ -40,28 +67,24 @@ export class ComputerScreen {
   }
 
   enterAnimation() {
-    const prevRotateY = Math.PI / 2;
-    // this.group.rotation.y = prevRotateY;
-    // this.group.position.x = -15;
-    this.group.position.y = -0.3;
     this.group.position.z = 6;
     const loadContainer = this.group.getObjectByName('loadContainer') as Object3D;
 
     gsap.timeline({
       scrollTrigger: {
         trigger: '#container',
-        start: innerHeight,
+        start: innerHeight * 0.9,
         end: innerHeight * 2,
         onUpdate: (event) => {
           const p = 1 - event.progress;
-          this.group.position.y = p * 10;
-          // this.group.rotation.y = prevRotateY * p;
+          this.group.position.y = p * this.group.userData.startPositionY;
         },
-        onLeave: (e) => {
-          console.log('leave');
-        },
+        onLeave: (e) => {},
         onEnterBack: () => {
-          console.log('onEnterBack');
+          this.onEnter();
+        },
+        onEnter: () => {
+          this.onEnter();
         },
       },
     });
@@ -119,7 +142,11 @@ export class ComputerScreen {
         start: innerHeight * 3.5,
         end: innerHeight * 4.5,
         onUpdate: (event) => {
-          this.group.position.z = 6 + event.progress * 6;
+          // this.group.position.z = 6 + event.progress * 6;
+          this.group.rotation.y = event.progress * -0.7;
+          this.group.position.y = event.progress * -1;
+          this.group.position.z = event.progress * -2 + 6;
+          this.group.position.x = event.progress * -4;
         },
         onLeave: (e) => {
           console.log('leave');

@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 22:52:29
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-20 20:21:15
+ * @LastEditTime: 2023-06-24 21:44:25
  * @Description: 欢迎文本
  */
 
@@ -27,9 +27,12 @@ export class WelcomeScreen {
     onUpdate: () => {
       this.setOpacity(this.attr.opacity);
       this.group.position.z = (1 - this.attr.opacity) * -5;
+      this.onLeave(this.attr.opacity);
     },
   });
   opacityQuickToIns: gsap.core.Tween;
+  onEnter = () => {};
+  onLeave = (p: number) => {};
 
   constructor() {
     this.init();
@@ -86,12 +89,14 @@ export class WelcomeScreen {
             this.textGroupWrap.position.z = -5 * event.progress;
           },
           onLeave: (e) => {
-            console.log('leave');
             this.opacityQuickToIns = this.opacityQuickTo(0).play();
           },
           onEnterBack: () => {
-            console.log('onEnterBack');
             this.opacityQuickToIns = this.opacityQuickTo(1).play();
+            this.onEnter();
+          },
+          onEnter: () => {
+            this.onEnter();
           },
         },
       });

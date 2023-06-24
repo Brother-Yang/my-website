@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-15 12:00:21
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-20 20:28:24
+ * @LastEditTime: 2023-06-21 15:55:34
  * @Description: 鼠标移动 镜头晃动
  */
 
@@ -24,6 +24,8 @@ export class MouseMove {
   });
   xQuickToTween: gsap.core.Tween;
   yQuickToTween: gsap.core.Tween;
+  /** 振幅 鼠标晃动的影响 */
+  amplitude = 1;
 
   constructor() {
     this.init();
@@ -34,10 +36,10 @@ export class MouseMove {
   mousemove(e: MouseEvent) {
     if (this.pause) return;
     //@ts-ignore
-    this.point.subVectors({ x: e.pageX, y: e.pageY, z: 1 }, this.viewCenter);
-    this.point.divide(this.viewCenter).divideScalar(10);
+    this.point.subVectors({ x: e.pageX, y: innerHeight - e.pageY, z: 1 }, this.viewCenter);
+    this.point.divide(this.viewCenter).divideScalar(this.amplitude);
+
     this.point.add(this.initCameraPosition);
-    // console.log(this.point);
     this.xQuickToTween = this.xQuickTo(this.point.x).play();
     this.yQuickToTween = this.yQuickTo(this.point.y).play();
   }
@@ -69,12 +71,12 @@ export class MouseMove {
   selfMouseUp = (e: MouseEvent) => this.mouseup.call(this, e);
 
   init() {
-    document.addEventListener('mousemove', this.selfMouseMove);
+    ThreeHelper.instance.renderer.domElement.addEventListener('mousemove', this.selfMouseMove);
     ThreeHelper.instance.renderer.domElement.addEventListener('mousedown', this.selfMouseDown);
   }
 
   dispose() {
-    document.removeEventListener('mousemove', this.selfMouseMove);
+    ThreeHelper.instance.renderer.domElement.removeEventListener('mousemove', this.selfMouseMove);
     ThreeHelper.instance.renderer.domElement.removeEventListener('mousedown', this.selfMouseDown);
   }
 }
