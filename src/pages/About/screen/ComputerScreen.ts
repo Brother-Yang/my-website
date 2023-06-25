@@ -142,8 +142,8 @@ export class ComputerScreen {
         start: innerHeight * 3.5,
         end: innerHeight * 4.5,
         onUpdate: (event) => {
-          // this.group.position.z = 6 + event.progress * 6;
           this.group.rotation.y = event.progress * -0.7;
+
           this.group.position.y = event.progress * -1;
           this.group.position.z = event.progress * -2 + 6;
           this.group.position.x = event.progress * -4;

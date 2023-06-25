@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-15 12:00:21
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-21 15:55:34
+ * @LastEditTime: 2023-06-25 12:00:05
  * @Description: 鼠标移动 镜头晃动
  */
 
@@ -13,7 +13,7 @@ import { gsap } from 'gsap';
 export class MouseMove {
   point = new Vector3();
   prevCameraPosition = new Vector3();
-  viewCenter = new Vector3(innerWidth / 2, innerHeight / 2, 1);
+  viewSize = new Vector3(innerWidth, innerHeight, 1);
   initCameraPosition = ThreeHelper.instance.camera.position.clone();
   pause = false;
   xQuickTo = gsap.quickTo(ThreeHelper.instance.camera.position, 'x', {
@@ -35,13 +35,13 @@ export class MouseMove {
 
   mousemove(e: MouseEvent) {
     if (this.pause) return;
-    //@ts-ignore
-    this.point.subVectors({ x: e.pageX, y: innerHeight - e.pageY, z: 1 }, this.viewCenter);
-    this.point.divide(this.viewCenter).divideScalar(this.amplitude);
 
-    this.point.add(this.initCameraPosition);
-    this.xQuickToTween = this.xQuickTo(this.point.x).play();
-    this.yQuickToTween = this.yQuickTo(this.point.y).play();
+    //  -1 ~ 1
+    const x = ((e.clientX / innerWidth) * 2 - 1) / this.amplitude;
+    const y = ((e.clientY / innerHeight) * 2 - 1) / this.amplitude;
+
+    this.xQuickToTween = this.xQuickTo(this.initCameraPosition.x + x).play();
+    this.yQuickToTween = this.yQuickTo(this.initCameraPosition.y + y).play();
   }
 
   mousedown(e: MouseEvent) {
