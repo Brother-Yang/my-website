@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-16 20:46:18
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-25 21:58:52
+ * @LastEditTime: 2023-06-26 15:59:22
  * @Description:第二屏幕 "电脑"
  */
 
@@ -202,11 +202,20 @@ export class ComputerScreen {
   }
 
   loadPeopleModel() {
+    /**
+     * TODO 模型第一次出现在视图中时 材质会被GPU加载 会卡顿 需解决
+     */
     ThreeHelper.instance.loadGltf('/models/people.glb').then((gltf) => {
       this.setEnv(gltf.scene);
       console.log(gltf);
       this.peopleModel.add(gltf.scene);
       this.peopleModel.position.z = -0.4;
+
+      // gltf.scene.traverse((obj: StandardMesh) => {
+      //   if (obj.isMesh) {
+      //     obj.material = new MeshStandardMaterial();
+      //   }
+      // });
 
       const mixer = new AnimationMixer(gltf.scene);
       const wave = gltf.animations.find((action) => action.name == 'wave') as THREE.AnimationClip;
