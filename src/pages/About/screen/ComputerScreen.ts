@@ -2,11 +2,11 @@
  * @Author: hongbin
  * @Date: 2023-06-16 20:46:18
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-26 15:59:22
+ * @LastEditTime: 2023-06-26 22:37:24
  * @Description:第二屏幕 "电脑"
  */
 
-import { AnimationMixer, Group, MeshStandardMaterial } from 'three';
+import { AnimationMixer, Group, MeshStandardMaterial, SRGBColorSpace, TextureLoader } from 'three';
 import { ThreeHelper } from '../ThreeHelper';
 import { gsap } from 'gsap';
 import { getBoxSize, getWindowSize } from '../ThreeHelper/utils';
@@ -145,7 +145,15 @@ export class ComputerScreen {
      * 屏幕亮起 logo退却 人物探身
      */
     const screen = this.group.getObjectByName('屏幕') as StandardMesh;
+    const innerScreen = this.group.getObjectByName('inner屏幕') as StandardMesh;
+    innerScreen.material = new MeshStandardMaterial({
+      map: new TextureLoader().load('/textures/pc_bg.jpg', (t) => {
+        t.flipY = false;
+        t.colorSpace = SRGBColorSpace;
+      }),
+    });
 
+    screen.material.transparent = true;
     screen.material.color.setScalar(0);
 
     const t4 = gsap.timeline({
@@ -171,6 +179,7 @@ export class ComputerScreen {
         onUpdate: (event) => {
           this.peopleModel.position.z = -0.2 + 0.2 * event.progress;
           this.animation(event.progress);
+          screen.material.opacity = 1 - event.progress;
         },
         onLeave: (e) => {},
         onEnterBack: () => {},
