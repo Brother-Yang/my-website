@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:30:59
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-24 21:47:33
+ * @LastEditTime: 2023-06-27 23:20:57
  * @Description: 关于洋少页 - 宏斌撰
  */
 import React, { useEffect, useRef } from 'react';
@@ -74,8 +74,16 @@ async function init(helper: ThreeHelper) {
   helper.camera.add(spotLight);
   helper.add(helper.camera);
 
-  // const noiseBg = new NoiseBg(helper.camera);
-  // helper.add(noiseBg.plane);
+  const bg = new NoiseBg(helper.camera);
+  helper.add(bg.plane);
+
+  const p = { opacity: 0 };
+
+  const quickOPacity = gsap.quickTo(p, 'opacity', {
+    onUpdate: () => {
+      bg.plane.material.uniforms.iOpacity.value = p.opacity;
+    },
+  });
 
   const mouseMove = new MouseMove();
 
@@ -84,6 +92,7 @@ async function init(helper: ThreeHelper) {
   welcomeScreen.onEnter = () => {
     mouseMove.amplitude = 1;
     console.log(1);
+    quickOPacity(0);
   };
   welcomeScreen.onLeave = (p) => {
     spotLight.position.z = (1 - p) * -10;
@@ -123,10 +132,12 @@ async function init(helper: ThreeHelper) {
 
   computerScreen.onEnter = () => {
     mouseMove.amplitude = 10;
+    quickOPacity(1);
   };
 
   destroyEvent.push(() => {
     mouseMove.dispose();
+    computerScreen.clickMesh.destroy();
     helper.controls.dispose();
   });
 }
@@ -157,7 +168,8 @@ class NoiseBg {
 
     const material = this.noiseMaterial();
 
-    this.plane = new THREE.Mesh(new THREE.PlaneGeometry(width, height, 1, 1), material);
+    // this.plane = new THREE.Mesh(new THREE.PlaneGeometry(width, height, 1, 1), material);
+    this.plane = new THREE.Mesh(new THREE.BoxGeometry(30, 30, 30), material);
     this.plane.onAfterRender = () => {
       this.plane.material.uniforms.iTime.value += 0.01;
     };
@@ -167,20 +179,22 @@ class NoiseBg {
     const material = new THREE.ShaderMaterial({
       uniforms: {
         iTime: { value: 1 },
+        iOpacity: { value: 0 },
       },
+      side: THREE.BackSide,
       transparent: true,
       vertexShader: `
-          varying vec2 vUv;
-          
-          void main() {
-              vUv = uv;
-              vec4 viewPosition =modelViewMatrix * vec4(position, 1.0);
-              gl_Position =  projectionMatrix * viewPosition;
-              // gl_Position =  vec4(position, 1.0);
-          }`,
+      varying vec2 vUv;
+      
+       void main() {
+          vUv = uv;
+          vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+          gl_Position = projectionMatrix * viewPosition;
+      }`,
       fragmentShader: `
           varying vec2 vUv;
           uniform float iTime;
+          uniform float iOpacity;
 
           #define PI 3.141592653589793
 
@@ -195,7 +209,7 @@ class NoiseBg {
                   
           void main() {
               vec3 color = vec3(rand(vUv * iTime));
-              gl_FragColor = vec4(color, 0.2);
+              gl_FragColor = vec4(color, 0.2 * iOpacity);
           }`,
     });
     return material;

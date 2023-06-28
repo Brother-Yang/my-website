@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-14 10:46:55
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-20 10:25:21
+ * @LastEditTime: 2023-06-27 10:24:56
  * @Description:  canvas 绘制立体文字
  */
 
@@ -14,7 +14,7 @@ class Canvas {
   protected ctx: CanvasRenderingContext2D = this.canvas.getContext('2d')!;
   public texture = new THREE.Texture(this.canvas);
 
-  constructor(font: string) {
+  constructor(font: string, color: string) {
     const accuracy = 1;
     this.canvas.width = 220 * accuracy;
     this.canvas.height = 240 * accuracy;
@@ -28,7 +28,7 @@ class Canvas {
     //绘制文字
     this.ctx.font = `${200 * accuracy}px Georgia`;
     this.ctx.textAlign = 'center';
-    this.ctx.fillStyle = '#999';
+    this.ctx.fillStyle = color || '#999';
     this.ctx.fillText(font, 110 * accuracy, 190 * accuracy);
 
     this.texture.needsUpdate = true;
@@ -43,8 +43,8 @@ class Canvas {
 export class CanvasFontMesh extends Canvas {
   mesh: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshStandardMaterial>;
 
-  constructor(font: string, position = new THREE.Vector3()) {
-    super(font);
+  constructor(font: string, color = '#999', position = new THREE.Vector3()) {
+    super(font, color);
 
     const material = new THREE.MeshStandardMaterial({
       map: this.texture,

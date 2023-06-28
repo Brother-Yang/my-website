@@ -2,7 +2,7 @@
  * @Author: hongbin
  * @Date: 2023-06-15 12:00:21
  * @LastEditors: hongbin
- * @LastEditTime: 2023-06-25 12:00:05
+ * @LastEditTime: 2023-06-27 09:33:57
  * @Description: 鼠标移动 镜头晃动
  */
 
@@ -48,8 +48,10 @@ export class MouseMove {
     if (this.pause) return;
     this.pause = true;
     this.prevCameraPosition.copy(ThreeHelper.instance.camera.position);
-    this.xQuickToTween.pause();
-    this.yQuickToTween.pause();
+    if (this.xQuickToTween && this.yQuickToTween) {
+      this.xQuickToTween.pause();
+      this.yQuickToTween.pause();
+    }
     document.addEventListener('mouseup', this.selfMouseUp, { once: true });
   }
 
