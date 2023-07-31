@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Input, Form } from 'antd';
 import _ from 'lodash';
 
+import { fetchLogin } from '@/services/login';
+
 import styles from './index.less';
 
 const Login = () => {
@@ -17,9 +19,12 @@ const Login = () => {
   };
 
   const onFinish = (values: typeof user) => {
-    if (_.isEqual(values, user)) {
-      navigate('/reduxToolkitDemo');
-    }
+    fetchLogin.call(values).then((res) => {
+      if (res?.code === 200) {
+        localStorage.setItem('token', res?.data);
+        navigate('/reduxToolkitDemo');
+      }
+    });
   };
 
   return (

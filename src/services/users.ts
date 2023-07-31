@@ -4,7 +4,7 @@ import { createAsyncThunkByCallback, createAsyncThunkByRequest } from '@/utils';
 
 type UserType = { password: string; username: string };
 
-export const fetchUserList = createAsyncThunkByRequest({ url: `users` });
+export const fetchUserList = createAsyncThunkByRequest({ url: `mysql/users` });
 
 export const fetchTokenTest = createAsyncThunkByRequest({ url: `profile` });
 

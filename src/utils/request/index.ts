@@ -2,7 +2,7 @@ import axios, { type AxiosRequestConfig } from 'axios';
 import { notification } from 'antd';
 
 // const baseUrl = 'https://jsonplaceholder.typicode.com/';
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'http://localhost:3456/';
 
 axios.defaults.baseURL = baseUrl;
 axios.defaults.timeout = 5000;
@@ -36,7 +36,7 @@ axios.interceptors.response.use(
   function (response) {
     // 2xx 范围内的状态码都会触发该函数。
     // 对响应数据做点什么
-    // console.log(response, 'response')
+    console.log(response, 'response');
     return response;
   },
   function (error) {
@@ -47,6 +47,10 @@ axios.interceptors.response.use(
       message: error.response.status,
       description: errorStatus()[error.response.status as keyof typeof errorStatus],
     });
+
+    if (error.response.status === 401) {
+      window.location.href = '/login';
+    }
 
     return Promise.reject(error);
   }
