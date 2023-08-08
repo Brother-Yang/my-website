@@ -12,26 +12,14 @@
     //
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     //
     "downlevelIteration": true,
     // json
     "resolveJsonModule": true,
-    "lib": [
-      "ES2015.Promise",
-      "dom",
-      "dom.iterable",
-      "es2018"
-    ]
+    "lib": ["ES2015.Promise", "dom", "dom.iterable", "es2018"]
   },
-  "include": [
-    "src/**/*",
-    "./src/pages/About/ThreeHelper/types/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./**/*.ts", "./**/*.tsx", "./src/pages/About/ThreeHelper/types/*.ts"],
+  "exclude": ["node_modules"]
 }
